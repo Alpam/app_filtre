@@ -9,10 +9,21 @@ public class ToolsImg{
 	 * (https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html)
 	 */
 	BufferedImage img;
-	BufferedImage gray;
+	
 	int width;
 	int height;
 	
+	public ToolsImg(Pixel[][] tbl, int type, int width, int height){
+		this.width = width;
+		this.height = height;
+		img = new BufferedImage(width,height,type);
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				img.setRGB(col,row,tbl[row][col].rgb);
+			}
+		}
+	}
+
 	public ToolsImg(String file) throws IOException{
 		/**
 		 * charge une image via le chemin fournit avec file,
@@ -25,7 +36,7 @@ public class ToolsImg{
 		height = img.getHeight();
 	}
 
-	public void save(String path, String ext, BufferedImage tosave) throws IOException{
+	public void save(String path, String ext) throws IOException{
 		/**
 		 * sauve une image à path
 		 * @param path : chemin complet vers l'image
@@ -33,13 +44,10 @@ public class ToolsImg{
 		 * @param tosave : BufferedImage à sauver
 		 */
 		File f = new File(path);
-		ImageIO.write(tosave,ext,f);
+		ImageIO.write(img,ext,f);
 	}
 
 	public Pixel[][] buffToTbl(){
-		/**
-		 * on transforme l'image en niveau de gris.
-		 */
 		Pixel[][] result = new Pixel[height][width];
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
@@ -49,13 +57,4 @@ public class ToolsImg{
 	return result;
 	}
 
-
-/*	public BufferedImage convertGrayTbltoIMG(int[] tbl){
-		BufferedImage g_img = new BufferedImage(width,height,BufferedImage.TYPE_BYTE_GRAY);
-		WritableRaster raster = g_img.getRaster();
-
-//		raster.setDataElements(0,0, width, height, (byte[])tbl);
-		g_img.setData(raster);
-		return g_img;
-	}*/
 }

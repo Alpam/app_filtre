@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.awt.image.BufferedImage;
 
 public class test{
 	public static void main(String[] args) throws IOException{
@@ -10,5 +11,8 @@ public class test{
 			}
 			System.out.println();
 		}
+		ToolsImg save = new ToolsImg(result, BufferedImage.TYPE_INT_RGB, img.width, img.height);
+		save.save("./gfd.png","png");
 	}
+	
 }
