@@ -11,6 +11,9 @@ public class test{
 			}
 			System.out.println();
 		}
+		for (int col = 0; col < img.width; col++) {
+			result[0][col].convertRgbToGray();
+		}
 		ToolsImg save = new ToolsImg(result, BufferedImage.TYPE_INT_RGB, img.width, img.height);
 		save.save("./gfd.png","png");
 	}
