@@ -3,19 +3,25 @@ import java.awt.image.BufferedImage;
 
 public class test{
 	public static void main(String[] args) throws IOException{
-		ToolsImg img = new ToolsImg("t02.png");
-		Pixel[][] result = img.buffToTbl();
-		for (int row = 0; row < img.height; row++) {
-			for (int col = 0; col < img.width; col++) {
-				System.out.print(""+result[row][col]+"|");
-			}
-			System.out.println();
+		if(args.length!=2){
+			System.out.println("Usage : java test <In> <Out>");
+			System.exit(0);
 		}
-		for (int col = 0; col < img.width; col++) {
-			result[0][col].convertRgbToGray();
+		String in = args[0];
+		String out = args[1];
+		ToolsImg img = new ToolsImg(in);
+		Pixel[][] r1 = img.rgbArray();
+		Pixel[][] r2 = img.grayArray();
+		for(Pixel px : r1[0]){
+			System.out.print(px+"|");
 		}
-		ToolsImg save = new ToolsImg(result, BufferedImage.TYPE_INT_RGB, img.width, img.height);
-		save.save("./gfd.png","png");
+		System.out.println();
+		for(Pixel px : r2[0]){
+			System.out.print(px+"|");
+		}
+		System.out.println();
+		ToolsImg s = new ToolsImg(r2,img.width,img.height);
+		s.save(out,"png");
 	}
 	
 }

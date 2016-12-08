@@ -13,10 +13,10 @@ public class ToolsImg{
 	int width;
 	int height;
 	
-	public ToolsImg(Pixel[][] tbl, int type, int width, int height){
+	public ToolsImg(Pixel[][] tbl, int width, int height){
 		this.width = width;
 		this.height = height;
-		img = new BufferedImage(width,height,type);
+		img = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 				img.setRGB(col,row,tbl[row][col].rgb);
@@ -47,14 +47,23 @@ public class ToolsImg{
 		ImageIO.write(img,ext,f);
 	}
 
-	public Pixel[][] buffToTbl(){
+	public Pixel[][] rgbArray(){
 		Pixel[][] result = new Pixel[height][width];
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 				result[row][col] = new Pixel(img.getRGB(col, row));
 			}
 		}
-	return result;
+		return result;
 	}
 
+	public PxGray[][] grayArray(){
+		PxGray[][] result = new PxGray[height][width];
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				result[row][col] = new PxGray(img.getRGB(col, row));
+			}
+		}
+		return result;
+	}
 }
