@@ -37,7 +37,7 @@ public class Widget extends JFrame {
 
 	}
 	public Widget(){
-			this("Sub:App-filter", 400, 100);
+			this("Sub:App", 400, 100);
 		}
 
 	public void reSize(){

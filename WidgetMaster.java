@@ -6,8 +6,9 @@ import javax.swing.JMenuItem;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ToolsImg.ToolsImg;
 import java.io.IOException;
+import ToolsImg.*;
+import Sobel.Sobel;
 
 public class WidgetMaster extends Widget {
 
@@ -48,7 +49,8 @@ public class WidgetMaster extends Widget {
 
 	public class SobelListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0){
-			ToolsImg w_i = new ToolsImg(t_img.grayArray(),t_img.width,t_img.height);
+			PxGray[][] s_img = Sobel.calcSobel(t_img.grayArray(),t_img.width,t_img.height);
+			ToolsImg w_i = new ToolsImg(s_img,t_img.width,t_img.height);
 			Widget w = new Widget(w_i,"Sobel");
 		}
 	}

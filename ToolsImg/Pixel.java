@@ -1,6 +1,7 @@
 package ToolsImg;
+
 public class Pixel{
-	int rgb;
+	public int rgb;
 
 	public Pixel(int rgb){
 		this.rgb = rgb;
