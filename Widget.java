@@ -9,7 +9,8 @@ import ToolsImg.ToolsImg;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JPanel;
-
+import javax.swing.JOptionPane;
+import java.io.IOException;
 
 public class Widget extends JFrame {
 	public ToolsImg t_img=null;
@@ -17,6 +18,7 @@ public class Widget extends JFrame {
 	public JMenuBar mbar = new JMenuBar();
 	public JMenu m_file = new JMenu("File");
 	public JMenuItem i_save = new JMenuItem("Save");
+
 	public Widget(String title, int width, int height){
 		this.setTitle(title);
 		this.setSize(width, height);
@@ -26,19 +28,51 @@ public class Widget extends JFrame {
 		this.m_file.add(i_save);
 		this.mbar.add(m_file);
 		this.setJMenuBar(mbar);
+		this.setContentPane(new Panel());
 		this.setVisible(true);
 	}
+	public Widget(ToolsImg img,String title){
+		this(title, img.width, img.height);
+		t_img = img;
 
+	}
 	public Widget(){
 			this("Sub:App-filter", 400, 100);
 		}
 
+	public void reSize(){
+		this.setSize(t_img.width,t_img.height);
+	}
+
 	public class OutListener extends IOListener implements ActionListener{
+		public void displayWarning(){
+		JOptionPane info = new JOptionPane();
+		info.showMessageDialog(null, "Add the extention: jpg, png or gif.\nNothing save !", "Information", JOptionPane.WARNING_MESSAGE);
+		}
+
 		public void actionPerformed(ActionEvent arg0) {
-			File file = getFile();
+			File file = getFile("Save");
 			String path = ""+file;
-			System.out.println(path);
-			//t_img.save()
+			String type = "";
+			for(int i=path.length()-1;i>=0;i--){
+				if(path.charAt(i)=='.'){
+					break;
+				}
+				if(path.charAt(i)=='/'){
+					displayWarning();
+					return;
+				}
+				type = "" + path.charAt(i) + type;
+			}
+			if(!(type.equals("png")  || type.equals("jpg") || type.equals("gif"))){
+				displayWarning();
+				return;
+			}
+			try{
+			t_img.save(path,type);
+			}catch (IOException e){
+				e.printStackTrace();
+			}
 		}
 	}
 

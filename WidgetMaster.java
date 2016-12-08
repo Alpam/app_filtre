@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class WidgetMaster extends Widget {
 
-	public JMenu m_filter = new JMenu("Filter");
+	public JMenu m_filter = new JMenu("Filtre");
 	public JMenuItem i_open = new JMenuItem("Open");
 	public JMenuItem i_sobel = new JMenuItem("Sobel");
 
@@ -23,27 +23,33 @@ public class WidgetMaster extends Widget {
 		this.m_file.add(i_open);
 		this.m_file.remove(0);
 		this.m_file.add(i_save);
+		SobelListener sl = new SobelListener();
+		i_sobel.addActionListener(sl);
 		this.m_filter.add(i_sobel);
 		this.mbar.add(m_filter);
-		this.setContentPane(new Panel());
 	}
 	public WidgetMaster(){
-		this("App-filter",400,100);
+		this("App-filter",200,100);
 	}
 
-	public void reSize(){
-		this.setSize(t_img.width,t_img.height);
-	}
+
 
 	public class InListener extends IOListener implements ActionListener{
 		public void  actionPerformed(ActionEvent arg0){
-			File file = getFile();
+			File file = getFile("Open File");
 			try{
 				t_img = new ToolsImg(file);
 				reSize();
 			}catch (IOException e){
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public class SobelListener implements ActionListener{
+		public void actionPerformed(ActionEvent arg0){
+			ToolsImg w_i = new ToolsImg(t_img.grayArray(),t_img.width,t_img.height);
+			Widget w = new Widget(w_i,"Sobel");
 		}
 	}
 }
