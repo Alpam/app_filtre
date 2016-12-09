@@ -4,18 +4,41 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * ToolsImg est la classe permettant de manipuler une image
+ * Elle permet de charger en mémoire une image existante sur le disque
+ * ou d'en crée une à partir d'un tableau de pixel
+ * Elle permet également de sauvegarder une image sur le disque
+ * Les formats : jpg, gif et png sont supportés.
+ */
+
 public class ToolsImg{
 	/**
-	 * Permet de manipuler une image sous forme de BufferedImage
-	 * (https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html)
+	 * img est de type BufferedImage et permet de créer une iamge à partir d'un tableau 2D
+	 * d'int ou d'en charger une dans la mémoire.
 	 */
 	public BufferedImage img;
 	
+	/**
+	 * width est la largeur de l'image
+	 */
 	public int width;
+
+	/**
+	 * height est la hauteur de l'image
+	 */
 	public int height;
 	
 	
-
+	/**
+	 * ToolsImg est le constructeur
+	 * @param tbl
+	 *				tableau de pixel permettant de créer la BufferedImage
+	 * @param width
+	 *				la largeur de l'image
+	 * @param height
+	 *				la hauteur de l'image
+	 */
 	public ToolsImg(Pixel[][] tbl, int width, int height){
 		this.width = width;
 		this.height = height;
@@ -27,12 +50,22 @@ public class ToolsImg{
 		}
 	}
 
+	/**
+	 * ToolsImg est le constructeur
+	 * @param f
+	 *				instance de type File qui représente un fichier
+	 */
 	public ToolsImg(File f) throws IOException{
 		img = ImageIO.read(f);
 		width = img.getWidth();
 		height = img.getHeight();
 	}
 
+	/**
+	 * ToolsImg est le constructeur
+	 * @param file
+	 *				chemin vers un fichier
+	 */
 	public ToolsImg(String file) throws IOException{
 		/**
 		 * charge une image via le chemin fournit avec file,
@@ -42,6 +75,13 @@ public class ToolsImg{
 		this(new File(file));
 	}
 
+	/**
+	 * permet de sauvegarder une image qui est en mémoire sous la forme d'une BufferedImage
+	 * @param path
+	 *				chemin complet du nouveau fichier
+	 * @param ext
+	 *				format de l'image
+	 */
 	public void save(String path, String ext) throws IOException{
 		/**
 		 * sauve une image à path
@@ -53,6 +93,11 @@ public class ToolsImg{
 		ImageIO.write(img,ext,f);
 	}
 
+	/**
+	 * permet de convertir une BufferedImage en un tableau 2D de pixel
+	 * @return
+	 *					un talbeau 2D de Pixel
+	 */
 	public Pixel[][] rgbArray(){
 		Pixel[][] result = new Pixel[height][width];
 		for (int row = 0; row < height; row++) {
@@ -63,6 +108,11 @@ public class ToolsImg{
 		return result;
 	}
 
+	/**
+	 * permet de convertir une BufferedImage en un tableau 2D de pixel
+	 * @return
+	 *					un talbeau 2D de PxGray
+	 */
 	public PxGray[][] grayArray(){
 		PxGray[][] result = new PxGray[height][width];
 		for (int row = 0; row < height; row++) {
